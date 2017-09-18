@@ -17,16 +17,4 @@ shinyServer(function(input, output) {
     
   })
   
-  
 })
-
-
-#install.packages('quantmod')
-install.packages('ggplot2')
-library(quantmod)
-simbolo <- 'BMV:ALFAA'
-fecha <- "2017-03-10"
-datos <- getSymbols.google(Symbols = simbolo, from = fecha, auto.assign = F)
-chartSeries(datos)
-
-
