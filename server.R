@@ -14,19 +14,5 @@ shinyServer(function(input, output) {
     chartSeries(datos, type = 'line',
                 TA = "addMACD();addSMA(n = 15, col = 'orange2');addMomentum(n = 15)",
                 layout = NULL, up.col = 'steelblue2', name = '')
-    
   })
-  
-  
 })
-
-
-#install.packages('quantmod')
-install.packages('ggplot2')
-library(quantmod)
-simbolo <- 'BMV:ALFAA'
-fecha <- "2017-03-10"
-datos <- getSymbols.google(Symbols = simbolo, from = fecha, auto.assign = F)
-chartSeries(datos)
-
-
