@@ -14,11 +14,6 @@ datos <- data.frame(datos)
 datos$Fecha = as.Date(rownames(datos))
 colnames(datos)[4] = 'Precio'
 
-# Gráfica inicial
-ggplot(data = datos, aes(x = Fecha, y = Precio)) +
-  geom_line(col = 'darkcyan', lwd = 0.75) + xlim(min(datos$Fecha), max(datos$Fecha)) +
-  geom_line(aes(y = mm), col = 'orange', lwd = 0.75)
-
 # Media movil
 
 ff <- datos$Fecha
@@ -29,9 +24,17 @@ for(j in 5:length(ff))
   datos$mm[j] <- mean(datos$Precio[(j-periodo):j])
 }
 
+# Gráfica inicial
+pp <- ggplot(data = datos, aes(x = Fecha, y = Precio)) +
+  geom_line(aes(text = Fecha), col = 'darkcyan', lwd = 0.75) + xlim(min(datos$Fecha), max(datos$Fecha)) +
+  geom_line(aes(y = mm), col = 'orange', lwd = 0.75)
+
+
+
 
 
 # install.packages('plotly')
-# library(plotly)
+library(plotly)
 
+ggplotly(pp, tooltip = c('y'))
 
