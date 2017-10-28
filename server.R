@@ -6,7 +6,7 @@ library(lubridate)
 
 # input <- list(simbolo = 'BMV:ALFAA', fecha = Sys.Date() - years(2) - weeks(1))
 
-# Simulation and Shiny Application of Flue Season Dynamics
+
 shinyServer(function(input, output) {
   
   exportar_serie <- reactive({

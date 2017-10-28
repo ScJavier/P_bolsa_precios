@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(shiny)\nlibrary(quantmod)\nlibrary(dygraphs)\nlibrary(dplyr)\nlibrary(lubridate)\n\n# input <- list(simbolo = 'BMV:ALFAA', fecha = Sys.Date() - years(2) - weeks(1))\n\n\nshinyServer(function(input, output) {\n  \n  exportar_serie <- reactive({\n    getSymbols.google(input$simbolo, from = input$fecha, auto.assign = F)\n  })\n\n  \n  output$tendencia15 <- renderText({\n    datos <- exportar_serie()\n    y <- tail(datos[, 4], 15); x <- 1:15\n    tendencia <- coef(lm(y ~ x))[2]\n    if (anova(lm(y ~ x))[[5]][1] > 0.1)\n    {\n      return('Sin tendencia')\n    } else\n    {\n     if (tendencia > 0)\n     {\n       return('Tendencia alcista')\n     } else\n     {\n        return('Tendencia bajista') \n     }\n    }\n  })\n  \n  \n  output$tendencia30 <- renderText({\n    datos <- exportar_serie()\n    y <- tail(datos[, 4], 30)\n    x <- 1:30\n    tendencia <- coef(lm(y ~ x))[2]\n    if (anova(lm(y ~ x))[[5]][1] > 0.1)\n    {\n      return('Sin tendencia')\n    } else\n    {\n      if (tendencia > 0)\n      {\n        return('Tendencia alcista')\n      } else\n      {\n        return('Tendencia bajista') \n      }\n    }\n  })\n  \n  \n  output$mediamovil <- renderText({\n    datos <- exportar_serie()\n    datos$MM <- SMA(datos[, 4], n = input$MA_n)\n    dat_aux <- tail(datos[, c(4, 6)], 1)\n    res <- 100*(dat_aux[1, 1] - dat_aux[1, 2])/dat_aux[1, 1]\n    return(res)\n  })\n  \n\n  output$graph1 <- renderDygraph({\n    datos <- exportar_serie()\n    dat_aux <- data.frame(Precio = datos[,paste0(input$simbolo, '.Close')],\n                          MV = SMA(datos[,paste0(input$simbolo, '.Close')], n = input$MA_n))\n    names(dat_aux) <- c('Precio', 'MV')\n    dygraph(dat_aux, main = input$simbolo) %>%\n      dyRangeSelector()\n  })\n  \n  \n  output$graph2 <- renderDygraph({\n    datos <- exportar_serie()\n    dat_aux <- momentum(datos[,paste0(input$simbolo, '.Close')], n = input$Mom_n)\n    dat_aux$MA_Mom <- SMA(dat_aux, 15)\n    names(dat_aux) <- c('Momentum', 'MV')\n    dygraph(dat_aux, main = 'Momentum') %>%\n      dyRangeSelector()\n  })\n  \n})\n",
+    "created" : 1509227656521.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1242099749",
+    "id" : "FB59B148",
+    "lastKnownWriteTime" : 1508103700,
+    "last_content_update" : 1508103700,
+    "path" : "~/Repositorios/P_bolsa_precios/server.R",
+    "project_path" : "server.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

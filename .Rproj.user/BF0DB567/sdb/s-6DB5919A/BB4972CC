@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(shiny)\nlibrary(quantmod)\nlibrary(dygraphs)\nlibrary(dplyr)\nlibrary(lubridate)\n\nfecha_5y <- Sys.Date() - years(5) - weeks(1)\nfecha_2y <- Sys.Date() - years(2) - weeks(1)\nfecha_1y <- Sys.Date() - years(1) - weeks(1)  \nfecha_6m <- Sys.Date() - months(6) - weeks(1)\n\nshinyUI(\n  fluidPage(theme = 'cosmo.css',\n    title = 'Panel de consulta',\n    fluidRow(\n      column(2,\n             h3('Menú de opciones'),\n             selectInput('simbolo', 'Símbolo IPC', \n                         c('AC' = 'BMV:AC',\n                           'ALFA.A' = 'BMV:ALFAA',\n                           'ALSEA' = 'BMV:ALSEA',\n                           'AMX.L' = 'BMV:AMXL',\n                           'ASUR.B' = 'BMV:ASURB'),\n                         selectize = T),\n             selectInput('fecha', 'Periodo', \n                         list('5 años' = fecha_5y,\n                              '2 años' = fecha_2y,\n                              '1 año' = fecha_1y,\n                              '6 meses' = fecha_6m),\n                         selectize = T, selected = fecha_1y),\n             numericInput('MA_n', 'Media movil (n)', value = 15,\n                          min = 1, max = 30, step = 1)\n      ),\n      \n      column(6,\n          dygraphOutput(\"graph1\")\n      ),\n      \n      column(4,\n          tags$h4('Tendencia 15 días'),\n          verbatimTextOutput('tendencia15'),\n          tags$h4('Tendencia 30 días'),\n          verbatimTextOutput('tendencia30')\n      )\n    ),\n    \n    hr(),\n    \n    fluidRow(\n      column(2,\n          numericInput('Mom_n', 'Momentum (n)', value = 15,\n                        min = 1, max = 30, step = 1)\n      ),\n      \n      column(6,\n          dygraphOutput(\"graph2\")\n      ),\n      \n      column(4,\n          tags$h4('Media móvil'),\n          verbatimTextOutput('mediamovil')\n      )\n    )\n    \n  )\n)",
+    "created" : 1509227657567.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2495889182",
+    "id" : "BB4972CC",
+    "lastKnownWriteTime" : 1508103423,
+    "last_content_update" : 1508103423,
+    "path" : "~/Repositorios/P_bolsa_precios/ui.R",
+    "project_path" : "ui.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,9 @@
+{
+    "path" : "~/Repositorios/P_bolsa_precios",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}
