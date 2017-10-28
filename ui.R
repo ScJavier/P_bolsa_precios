@@ -32,11 +32,11 @@ shinyUI(
                           min = 1, max = 30, step = 1)
       ),
       
-      column(6,
+      column(7,
           dygraphOutput("graph1")
       ),
       
-      column(4,
+      column(3,
           tags$h4('Tendencia 15 días'),
           verbatimTextOutput('tendencia15'),
           tags$h4('Tendencia 30 días'),
